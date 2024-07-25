@@ -30,6 +30,11 @@ public class MainManager : MonoBehaviour
         MASTERCLIENT    // 개발자용
     }
 
+    // 빌드 초기 실행시 프로그램 사용 주체 설정
+    [Header("실행 권한 상태")]
+    public ClientStatus authStatus;
+
+    // 런타임시 프로그램 사용 주체 설정
     [Header("클라이언트 상태")]
     public ClientStatus clientStatus;
 

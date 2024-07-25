@@ -105,45 +105,64 @@ public class LoadingManager : MonoBehaviour
         {
             case MainManager.ClientStatus.SERVER:
                 NetworkManager.singleton.StartServer();
+                print("SERVER");
                 break;
             case MainManager.ClientStatus.CLIENT:
                 NetworkManager.singleton.StartClient();
+                print("CLIENT");
                 break;
             case MainManager.ClientStatus.MASTERCLIENT:
+                NetworkManager.singleton.StartHost();
+                print("HOST");
                 break;
         }
-
-        // 1. 다음 씬 전환 상태정보 operation 으로 확인
-        AsyncOperation operation = NetworkManager.loadingSceneAsync;
-        operation.allowSceneActivation = false;
 
         yield return new WaitForSeconds(0.5f);
 
-        // 2. 로딩창은 기본적으로 delay 시간만큼을 가지도록 설계함.
-        // 참고 링크 : https://mirror-networking.gitbook.io/docs/manual/interest-management/scene
-        while (!operation.isDone)
-        {
-            time += Time.deltaTime;
-            slider.value = time / delay;
+        // 1. 다음 씬 전환 상태정보 operation 으로 확인
+        AsyncOperation operation = null;
 
-            if (time > delay)
+        //AsyncOperation operation = NetworkManager.loadingSceneAsync;
+        if (operation != null)
+        {
+            operation.allowSceneActivation = false;
+
+            // 2. 로딩창은 기본적으로 delay 시간만큼을 가지도록 설계함.
+            // 참고 링크 : https://mirror-networking.gitbook.io/docs/manual/interest-management/scene
+            while (!operation.isDone)
             {
-                operation.allowSceneActivation = true;
+                time += Time.deltaTime;
+                slider.value = time / delay;
+
+                if (time > delay)
+                {
+                    operation.allowSceneActivation = true;
+
+                    yield return null;
+                }
+                yield return null;
+            }
+
+            /*
+            while (!operation.isDone)
+            {
+                yield return null;
+        
+                slider.value = operation.progress;
+
+                if (operation.progress >= 0.99f) operation.allowSceneActivation = true;
+            }
+            */
+        }
+        else
+        {
+            while (time <= delay)
+            {
+                time += Time.deltaTime;
+                slider.value = time / delay;
 
                 yield return null;
             }
-            yield return null;
         }
-
-        /*
-        while (!operation.isDone)
-        {
-            yield return null;
-        
-            slider.value = operation.progress;
-
-            if (operation.progress >= 0.99f) operation.allowSceneActivation = true;
-        }
-        */
     }
 }

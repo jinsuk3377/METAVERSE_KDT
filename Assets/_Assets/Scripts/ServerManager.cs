@@ -86,7 +86,7 @@ public class ServerManager : MonoBehaviour
 
                 MainManager.Instance.nextSceneNumber = serverNum;
                 NetworkManager.singleton.onlineScene = MainManager.Instance.scenes[0];
-                    ;
+                
                 break;
             case 3:
                 this.serverNum = serverNum;
@@ -123,6 +123,15 @@ public class ServerManager : MonoBehaviour
     public void RunStartClient ()
     {
         MainManager.Instance.clientStatus = MainManager.ClientStatus.CLIENT;
+
+        // 로딩씬 실행
+        SceneManager.LoadSceneAsync("00 LOADING");
+    }
+
+    // 클라이언트 실행
+    public void RunStartHost ()
+    {
+        MainManager.Instance.clientStatus = MainManager.ClientStatus.MASTERCLIENT;
 
         // 로딩씬 실행
         SceneManager.LoadSceneAsync("00 LOADING");
