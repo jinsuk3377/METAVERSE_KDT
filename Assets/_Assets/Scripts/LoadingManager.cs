@@ -101,6 +101,33 @@ public class LoadingManager : MonoBehaviour
 
     IEnumerator LoadOnlineScene()
     {
+        NetworkManager.singleton.Reset();
+
+        //다음에 이동할 서버의 정보를 이 지점에서 체크한다.
+        //서버에 등록해주어야 할 정보
+        // 1. 사용할 ip 주소
+        // 2. 이동할 포트 번호
+        // ServerManager를 활용.
+        ServerManager.instance.SetNetworkSetting(MainManager.Instance.moveAddr, MainManager.Instance.MoveScenePort.ToString());
+
+        // 3. 이동할 씬 이름
+        if(MainManager.Instance.nextSceneNumber == 2) // 로비
+        {
+            NetworkManager.singleton.onlineScene = MainManager.Instance.scenes[0];
+        }
+        else if(MainManager.Instance.nextSceneNumber == 3) // 룸
+        {
+            NetworkManager.singleton.onlineScene = MainManager.Instance.scenes[1];
+        }
+        else
+        {
+            //그 외에는 오류기 때문에 함수를 중지한다.
+            yield break;
+        }
+        Debug.Log("온라인 씬 실행 : " + NetworkManager.singleton.onlineScene);
+
+        yield return null;
+
         switch (MainManager.Instance.clientStatus)
         {
             case MainManager.ClientStatus.SERVER:
@@ -121,7 +148,7 @@ public class LoadingManager : MonoBehaviour
 
         // 1. 다음 씬 전환 상태정보 operation 으로 확인
         AsyncOperation operation = null;
-
+        
         //AsyncOperation operation = NetworkManager.loadingSceneAsync;
         if (operation != null)
         {

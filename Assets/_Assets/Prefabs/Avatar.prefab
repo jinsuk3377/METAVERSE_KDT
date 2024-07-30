@@ -2134,7 +2134,7 @@ MonoBehaviour:
   syncDirection: 1
   syncMode: 0
   syncInterval: 0
-  clientAuthority: 0
+  clientAuthority: 1
   animator: {fileID: 1100337822065106574}
 --- !u!114 &3100236067523070536
 MonoBehaviour:
@@ -2152,6 +2152,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   playerCameraRoot: {fileID: 5928670522670406951}
+  playerNameTxt: {fileID: 214643066079277052}
 --- !u!1 &1138084062126767705
 GameObject:
   m_ObjectHideFlags: 0
