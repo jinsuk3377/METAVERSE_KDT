@@ -1121,9 +1121,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1554663459}
-        m_TargetAssemblyTypeName: LoginManager, Assembly-CSharp
-        m_MethodName: OnClickLoginBtn
+      - m_Target: {fileID: 82258146}
+        m_TargetAssemblyTypeName: ServerGUI, Assembly-CSharp
+        m_MethodName: OnClickClientBtn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
